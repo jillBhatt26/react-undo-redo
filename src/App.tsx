@@ -75,7 +75,7 @@ const App = (): JSX.Element => {
             if (ptr === elements.length - 1) {
                 setElements([...elements, inpElement]);
             } else {
-                const allElements = elements;
+                const allElements = elementsTillPtr;
 
                 allElements[ptr + 1] = inpElement;
 
