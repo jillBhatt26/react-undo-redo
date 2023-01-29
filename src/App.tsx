@@ -57,16 +57,6 @@ const App = (): JSX.Element => {
         setPtr(elements.length - 1);
     }, [elements]);
 
-    // useEffect(() => {
-    //     setElements(elements => {
-    //         if (elements.length && ptr < elements.length - 1) {
-    //             return elements.splice(ptr + 1, 1);
-    //         }
-
-    //         return elements;
-    //     });
-    // }, [ptr]);
-
     useEffect(() => {
         if (ptr > -1) {
             setElementsTillPtr(elements.slice(0, ptr + 1));
@@ -82,7 +72,20 @@ const App = (): JSX.Element => {
         e.preventDefault();
 
         if (inpElement.length) {
-            setElements([...elements, inpElement]);
+            if (ptr === elements.length - 1) {
+                setElements([...elements, inpElement]);
+            } else {
+                const allElements = elements;
+
+                allElements[ptr + 1] = inpElement;
+
+                setElements(allElements);
+
+                // setElements(elements.splice(ptr + 1, 1, inpElement));
+
+                setPtr(ptr + 1);
+            }
+
             setInpElement('');
         }
     };
@@ -95,7 +98,7 @@ const App = (): JSX.Element => {
                 <input
                     type="text"
                     value={inpElement}
-                    placeholder="New Name"
+                    placeholder="New Element"
                     onChange={e => setInpElement(e.target.value)}
                 />
             </form>
